@@ -1,0 +1,23 @@
+body {
+  background-color: #161a28;
+  font-family: "Poetsen One", sans-serif;
+}
+
+.crud-form {
+  box-shadow: 0em 0em 1em 0.2em lavender;
+}
+
+input,
+textarea {
+  border: none !important;
+}
+
+/* .product {
+  height: 500px;
+} */
+
+.product-image img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}

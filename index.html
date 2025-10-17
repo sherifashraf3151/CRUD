@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon_io/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+    <section class="crud">
+        <div class="container crud-form bg-light p-3 my-4 rounded ">
+
+            <h1 class="text-center">CRUD SYSTEM  </h1>
+        
+            <div class="form-floating my-1">
+                <input oninput="validateInput(this)" type="text" class="form-control" id="productName" placeholder="">
+                <div class="alert alert-danger p-3 mt-1 mb-3 rounded-3 d-none">
+                  <p class="text-muted m-0 p-0 ">Product Name is not Valid because you shlould start with Capital letter</p>
+                </div>
+                <label for="productName">Product Name </label>
+            </div>
+            
+            <div class="form-floating my-1">
+                <input oninput="validateInput(this)" type="number" class="form-control" id="productPrice" placeholder="">
+                <div class="alert alert-danger p-3 mt-1 mb-3 rounded-3 d-none">
+                  <p class="text-muted m-0 p-0 ">Product Price is not Valid because you shlould Enter Number betwen 100 and 100,000</p>
+                </div>
+                <label for="productPrice">Product Price </label>
+            </div>
+    
+            <div class="form-floating my-1">
+                <input onchange="validateInput(this)" list="category" type="text" class="form-control" id="productCategory" placeholder="">
+                <div class="alert alert-danger p-3 mt-1 mb-3 rounded-3 d-none">
+                  <p class="text-muted m-0 p-0 ">Product Category is not Valid because you Choose betwen list options</p>
+                </div>
+                <label for="productCategory">Product Category </label>
+                <datalist id="category">
+                    <option value="TV" />
+                    <option value="Mobile" />
+                    <option value="Screens" />
+                    <option value="Electronic" />
+                </datalist>
+            </div>
+    
+            <div class="form-floating my-1">
+                <textarea oninput="validateInput(this)" style="height: 100px;" class="form-control" id="productDescription" placeholder=""></textarea>
+                <div class="alert alert-danger p-3 mt-1 mb-3 rounded-3 d-none">
+                  <p class="text-muted m-0 p-0 ">Product Description is not Valid because you shlould Write Data about product</p>
+                </div>
+                <label for="productDescription">Product Description </label>
+            </div>
+    
+            <div class="form-floating my-1">
+                <input onchange="validateInput(this)" type="file" class="form-control" id="productImage" placeholder="">
+                <div class="alert alert-danger p-3 mt-1 mb-3 rounded-3 d-none">
+                  <p class="text-muted m-0 p-0 ">Product Image is not Valid because you shlould Image not any File Type</p>
+                </div>
+                <label for="productImage">Product Image </label>
+            </div>
+    
+            <div class="mt-3">
+                <button onclick="createProduct()" id="btnAdd" class="btn btn-outline-dark w-100">+Add Product</button>    
+                <button onclick="updateProduct()" id="btnUpdate" class="btn btn-outline-warning w-100 d-none">Update Product</button>    
+            </div>
+    
+        </div>
+    </section>
+
+<section class="crud-display">
+    <input oninput="searchForProduct(this.value)" type="text" class="form-control mx-auto w-50" id="searchInput" placeholder="Search by product name ...">
+    <div class="container">
+        <div id="row" class="row">
+            
+        </div>
+    </div>
+        <!-- </div> -->
+</section>
+
+
+
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
