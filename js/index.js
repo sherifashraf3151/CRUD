@@ -34,22 +34,29 @@ function createProduct() {
     validateInput(productDescription) &
     validateInput(productImage)
   ) {
-    var product = {
-      // Get Values
-      p_name: productName.value,
-      p_price: productPrice.value,
-      p_category: productCategory.value,
-      p_desc: productDescription.value,
-      p_img: productImage.files[0]?.name,
+    // Read the image file as base64
+    var file = productImage.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var product = {
+        // Get Values
+        p_name: productName.value,
+        p_price: productPrice.value,
+        p_category: productCategory.value,
+        p_desc: productDescription.value,
+        p_img: e.target.result.split(',')[1], // base64 data
+        p_img_type: file.type,
+      };
+      // add the product in array [ products ]
+      products.push(product);
+      console.log(products);
+      // Add products in local storage
+      localStorage.setItem("market", JSON.stringify(products));
+      // Set Values = make them empty
+      clear();
+      displayProducts(products);
     };
-    // add the product in array [ products ]
-    products.push(product);
-    console.log(products);
-    // Add products in local storage
-    localStorage.setItem("market", JSON.stringify(products));
-    // Set Values = make them empty
-    clear();
-    displayProducts(products);
+    reader.readAsDataURL(file);
   }
 }
 
@@ -77,7 +84,7 @@ function displayProducts(data) {
       <h1 class="bg-info text-center rounded-3"> ${i} </h1>
       <div class="product bg-light p-3 rounded-3 ">
         <div class="product-image d-flex justify-content-center">
-          <img class="d-block w-50" src="./images/Products/${data[i].p_img}" alt="">
+          <img class="d-block w-50" src="data:${data[i].p_img_type};base64,${data[i].p_img}" alt="">
         </div>
         <div class="product-body">
           <h2 class="h3">Name: <span>${data[i].p_name}</span></h2>
@@ -118,7 +125,7 @@ function setFormToUpdate(elementIndex) {
   productPrice.value = products[elementIndex].p_price;
   productCategory.value = products[elementIndex].p_category;
   productDescription.value = products[elementIndex].p_desc;
-  productImage.value = products[elementIndex].p_img;
+  // Note: Image input cannot be pre-filled for security reasons. User must re-select if updating image.
 }
 
 function updateProduct() {
@@ -132,16 +139,27 @@ function updateProduct() {
   products[globalIndex].p_desc = productDescription.value;
   // if image file in Update Case is Empty
   if (productImage.files[0]) {
-    products[globalIndex].p_img = productImage.files[0].name;
+    var file = productImage.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      products[globalIndex].p_img = e.target.result.split(',')[1];
+      products[globalIndex].p_img_type = file.type;
+      // refresh the Local Storage
+      localStorage.setItem("market", JSON.stringify(products));
+      // Clear the inputs
+      clear();
+      // Display the New Product
+      displayProducts(products);
+    };
+    reader.readAsDataURL(file);
   } else {
-    products[globalIndex].p_img = products[globalIndex].p_img;
+    // refresh the Local Storage
+    localStorage.setItem("market", JSON.stringify(products));
+    // Clear the inputs
+    clear();
+    // Display the New Product
+    displayProducts(products);
   }
-  // refresh the Local Storage
-  localStorage.setItem("market", JSON.stringify(products));
-  // Clear the inputs
-  clear();
-  // Display the New Product
-  displayProducts(products);
 }
 
 function searchForProduct(searchKey) {
